@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -16,7 +18,16 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 @Slf4j
-@Component( immediate = true,service = {Servlet.class},properties = {"sling.servlet.paths=" + chatServlet.RESOURCE_PATH, "sling.servlet.methods=GET"})
+@Component(
+        immediate = true,
+        service = Servlet.class,
+        property = {
+                Constants.SERVICE_DESCRIPTION + "=ChatGPT Integration",
+                "sling.servlet.methods=" + HttpConstants.METHOD_GET,
+                "sling.servlet.paths=" + "/bin/chat",
+                "sling.servlet.extensions={\"json\"}"
+        }
+)
 public class chatServlet extends SlingSafeMethodsServlet {
 
     private static final long serialVersionUID = 1L;
