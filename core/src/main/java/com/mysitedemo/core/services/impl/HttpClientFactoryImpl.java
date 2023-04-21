@@ -1,6 +1,5 @@
 package com.mysitedemo.core.services.impl;
 
-import com.drew.lang.StringUtil;
 import com.mysitedemo.core.services.HttpClientFactory;
 import com.mysitedemo.core.services.config.HttpClientConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +26,10 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.osgi.service.component.annotations.*;
 import org.osgi.service.metatype.annotations.Designate;
+import org.apache.http.config.Registry;
+
 
 import java.io.IOException;
-import java.rmi.registry.Registry;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Designate(ocd= HttpClientFactory.class)
+@Designate(ocd= HttpClientConfig.class)
 @Component(service=HttpClientFactory.class)
 public class HttpClientFactoryImpl implements HttpClientFactory {
 
@@ -48,7 +48,7 @@ public class HttpClientFactoryImpl implements HttpClientFactory {
     private CloseableHttpClient closeableHttpClient;
 
     @Reference
-    private HttpClientFactory httpClientFactory;
+    private HttpClientBuilderFactory httpClientBuilderFactory;
 
     @Modified
     @Activate
@@ -85,7 +85,7 @@ public class HttpClientFactoryImpl implements HttpClientFactory {
 
         RequestConfig requestConfig= initRequestConfig();
 
-        HttpClientBuilder builder= HttpClientBuilderFactory.newBuilder();
+        HttpClientBuilder builder= httpClientBuilderFactory.newBuilder();
 
         builder.setDefaultRequestConfig(requestConfig);
 
@@ -167,7 +167,7 @@ public class HttpClientFactoryImpl implements HttpClientFactory {
 
     @Override
     public Request post(){
-        Request.Post(baseUrl);
+       return Request.Post(baseUrl);
     }
 
     ConnectionKeepAliveStrategy keepAliveStrategy = new ConnectionKeepAliveStrategy() {

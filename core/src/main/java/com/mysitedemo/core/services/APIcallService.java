@@ -8,5 +8,5 @@ package com.mysitedemo.core.services;
      * @param maxTokens    maximum words to be summarized
      * @return @{@link String}
      */
-     String callApi(String Text,String maxTokens);
+     String callApi(String Text,int maxTokens);
 }
