@@ -109,11 +109,12 @@ public class HttpClientFactoryImpl implements HttpClientFactory {
         // Set the connection pool manager for the HttpClient builder
         builder.setConnectionManager(connectionManager);
 
-        List<Header> headers=new ArrayList<>();
-        headers.add(new BasicHeader("Content-Type","Application.json"));
-        headers.add(new BasicHeader("Authorization","Beaer"+config.apiKey()));
+        List<Header> headers = new ArrayList<>();
+        headers.add(new BasicHeader("Content-Type", "application/json"));
+        headers.add(new BasicHeader("Authorization", "Bearer " + config.apiKey()));
         builder.setDefaultHeaders(headers);
         builder.setKeepAliveStrategy(keepAliveStrategy);
+
         closeableHttpClient=builder.build();
         executor=Executor.newInstance(closeableHttpClient);
 

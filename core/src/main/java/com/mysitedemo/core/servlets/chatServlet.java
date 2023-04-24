@@ -22,7 +22,7 @@ import java.io.IOException;
         immediate = true,
         service = Servlet.class,
         property = {
-                Constants.SERVICE_DESCRIPTION + "=ChatGPT Integration",
+                Constants.SERVICE_DESCRIPTION + "= ChatGPT Integration",
                 "sling.servlet.methods=" + HttpConstants.METHOD_GET,
                 "sling.servlet.paths=" + "/bin/chat",
                 "sling.servlet.extensions={\"json\"}"
@@ -48,9 +48,8 @@ public class chatServlet extends SlingSafeMethodsServlet {
                 try {
                     if (StringUtils.isNoneEmpty(prompt) && StringUtils.isNotEmpty(maxtoken)) {
                         int tokenCount = Integer.parseInt(maxtoken);
-                        jsonObject.put(TEASER_TITLE, apiInvoker.callApi(prompt, tokenCount));
+                        jsonObject.put("Response : ", apiInvoker.callApi(prompt, tokenCount));
                     }
-                    //jsonObject.put(TEASER_DESCRIPTION, apiInvoker.callApi(desc, descToken));
                 } catch (JSONException e) {
                     log.error(e.getMessage());
                 }
