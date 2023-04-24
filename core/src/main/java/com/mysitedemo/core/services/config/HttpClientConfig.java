@@ -15,7 +15,7 @@ public @interface HttpClientConfig {
     String apiUriPath() default "/v1/engines/davinci/completions";
 
     @AttributeDefinition(name = "API Key to access open AI",description = "CHAT GPT Open AI key ",type = AttributeType.STRING)
-    String apiKey() default "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";
+    String apiKey() default "";
 
     @AttributeDefinition(name = "Connection Time out ",description = "Duration before connection time outs, default is 30",type = AttributeType.INTEGER)
     int maxTimeOut() default 30;
